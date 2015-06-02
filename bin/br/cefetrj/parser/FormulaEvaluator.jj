@@ -1,0 +1,116 @@
+options {
+    STATIC = false;
+    LOOKAHEAD = 2;
+}
+
+PARSER_BEGIN(FormulaEvaluator)
+package br.cefetrj.parser;
+
+public class FormulaEvaluator
+{
+  public static void main(String args []) throws ParseException
+  {
+    FormulaEvaluator parser = new FormulaEvaluator(System.in);
+    while (true)
+    {
+      System.out.println("Reading from standard input...");
+      System.out.print("Enter an expression like \"1+(2+3)*4\" :");
+      try
+      {
+	      System.out.println(parser.parse());
+      }
+      catch (br.cefetrj.parser.ParseException e)
+      {
+        e.printStackTrace();
+        System.out.println("NOK.");
+        System.out.println(e.getMessage());
+        parser.ReInit(System.in);
+      }
+      catch (Error e)
+      {
+        System.out.println("Oops.");
+        System.out.println(e.getMessage());
+        break;
+      }
+    }
+  }
+}
+PARSER_END(FormulaEvaluator)
+
+SKIP : { " " | "\t" | "\r" }
+
+TOKEN : { < NUMBER : (["0"-"9"])+ ("." (["0"-"9"])+)? > }
+TOKEN : { < EOL : "\n" > }
+TOKEN : { < PLUS : "+" > }
+TOKEN : { < MINUS : "-" > }
+TOKEN : { < EXPONENT : "^" > }
+
+double parse() : {
+    double value;
+}
+{
+    value=expr()
+    (<EOF> | <EOL>)		{ return value; }
+}
+
+double expr() : {
+    double x;
+    double y;
+}
+{
+    x=term()
+    (
+    	<PLUS> y=term()	{ x += y; }
+    |
+    	<MINUS> y=term()	{ x -= y; } 
+    )*
+    { return x; }
+}
+
+double term() : {
+    double x;
+    double y;
+}
+{
+    x=expExpr()
+    (
+    	"*" y=expExpr()	{ x *= y; }
+    	|
+    	"/" y=expExpr()	{ x /= y; }
+    )*
+    { return x; }
+    |
+    "\\frac{" x=expExpr() "}" "{" y=expExpr() "}"
+    { return x/y; }
+}
+
+double expExpr() : {
+    double x;
+    double y;
+}
+{
+    x=value()
+    (
+    	<EXPONENT> y=value()	{ return Math.pow(x,y); }
+    )?
+    { return x; }
+}
+
+double value() : {
+    double value;
+}
+{
+    "-" value=number()	{ return -value; }
+    |
+    value=number()		{ return value; }
+}
+
+double number() : {
+    Token t;
+    double value;
+}
+{
+    t=<NUMBER>		{ return Double.parseDouble(t.image); }
+    |
+    "(" value=expr() ")"	{ return value; }
+}
