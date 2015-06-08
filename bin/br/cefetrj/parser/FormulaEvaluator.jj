@@ -41,13 +41,13 @@ PARSER_END(FormulaEvaluator)
 SKIP : { " " | "\t" | "\r" }
 
 TOKEN:
-{
-   < EIGENVALUE_IDENTIFIER:
-   		"q_" <DIGITS>
-   | "\\lambda_" <DIGITS>
-   | "\\mu_" <DIGITS>
-   >
-}
+	{
+	   < EIGENVALUE_IDENTIFIER:
+	   		"q_" <DIGITS>
+	   | "\\lambda_" <DIGITS>
+	   | "\\mu_" <DIGITS>
+	   >
+	}
 
 TOKEN: /* Numeric constants */
 	{	<INT_CONST: <DIGITS> >
