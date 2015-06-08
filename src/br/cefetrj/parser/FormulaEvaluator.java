@@ -85,11 +85,11 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
           break label_2;
         }
         if (jj_2_7(2)) {
-          jj_consume_token(9);
+          jj_consume_token(14);
           y = expExpr();
                           x *= y;
         } else if (jj_2_8(2)) {
-          jj_consume_token(10);
+          jj_consume_token(15);
           y = expExpr();
                           x /= y;
         } else {
@@ -99,12 +99,12 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
       }
       {if (true) return x;}
     } else if (jj_2_10(2)) {
-      jj_consume_token(11);
-      x = expExpr();
-      jj_consume_token(12);
-      jj_consume_token(13);
-      y = expExpr();
-      jj_consume_token(12);
+      jj_consume_token(16);
+      x = expr();
+      jj_consume_token(17);
+      jj_consume_token(18);
+      y = expr();
+      jj_consume_token(17);
       {if (true) return x/y;}
     } else {
       jj_consume_token(-1);
@@ -118,7 +118,7 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
     double y;
     x = value();
     if (jj_2_11(2)) {
-      jj_consume_token(EXPONENT);
+      jj_consume_token(POWER);
       y = value();
                                   {if (true) return Math.pow(x,y);}
     } else {
@@ -148,12 +148,18 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
     Token t;
     double value;
     if (jj_2_14(2)) {
-      t = jj_consume_token(NUMBER);
-                          {if (true) return Double.parseDouble(t.image);}
+      t = jj_consume_token(EIGENVALUE_IDENTIFIER);
+                                          {if (true) return 1.0;}
     } else if (jj_2_15(2)) {
-      jj_consume_token(14);
+      t = jj_consume_token(DBL_CONST);
+                                  {if (true) return Double.parseDouble(t.image);}
+    } else if (jj_2_16(2)) {
+      t = jj_consume_token(INT_CONST);
+                                  {if (true) return Double.parseDouble(t.image);}
+    } else if (jj_2_17(2)) {
+      jj_consume_token(19);
       value = expr();
-      jj_consume_token(15);
+      jj_consume_token(20);
                                   {if (true) return value;}
     } else {
       jj_consume_token(-1);
@@ -267,20 +273,84 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
     finally { jj_save(14, xla); }
   }
 
+  private boolean jj_2_16(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_16(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(15, xla); }
+  }
+
+  private boolean jj_2_17(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_17(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(16, xla); }
+  }
+
+  private boolean jj_3_2() {
+    if (jj_scan_token(EOL)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_5() {
+    if (jj_3R_3()) return true;
+    return false;
+  }
+
+  private boolean jj_3_13() {
+    if (jj_3R_7()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_6() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_12()) {
+    jj_scanpos = xsp;
+    if (jj_3_13()) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3_12() {
+    if (jj_scan_token(MINUS)) return true;
+    if (jj_3R_7()) return true;
+    return false;
+  }
+
+  private boolean jj_3_1() {
+    if (jj_scan_token(0)) return true;
+    return false;
+  }
+
+  private boolean jj_3_11() {
+    if (jj_scan_token(POWER)) return true;
+    if (jj_3R_6()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_4() {
+    if (jj_3R_6()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_11()) jj_scanpos = xsp;
+    return false;
+  }
+
   private boolean jj_3_8() {
-    if (jj_scan_token(10)) return true;
+    if (jj_scan_token(15)) return true;
     if (jj_3R_4()) return true;
     return false;
   }
 
   private boolean jj_3_10() {
-    if (jj_scan_token(11)) return true;
-    if (jj_3R_4()) return true;
+    if (jj_scan_token(16)) return true;
+    if (jj_3R_5()) return true;
     return false;
   }
 
   private boolean jj_3_7() {
-    if (jj_scan_token(9)) return true;
+    if (jj_scan_token(14)) return true;
     if (jj_3R_4()) return true;
     return false;
   }
@@ -295,16 +365,6 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
     return false;
   }
 
-  private boolean jj_3_9() {
-    if (jj_3R_4()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_6()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
   private boolean jj_3R_3() {
     Token xsp;
     xsp = jj_scanpos;
@@ -315,6 +375,27 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
     return false;
   }
 
+  private boolean jj_3_9() {
+    if (jj_3R_4()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_6()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  private boolean jj_3_17() {
+    if (jj_scan_token(19)) return true;
+    if (jj_3R_5()) return true;
+    return false;
+  }
+
+  private boolean jj_3_16() {
+    if (jj_scan_token(INT_CONST)) return true;
+    return false;
+  }
+
   private boolean jj_3_5() {
     if (jj_scan_token(MINUS)) return true;
     if (jj_3R_3()) return true;
@@ -322,8 +403,7 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
   }
 
   private boolean jj_3_15() {
-    if (jj_scan_token(14)) return true;
-    if (jj_3R_7()) return true;
+    if (jj_scan_token(DBL_CONST)) return true;
     return false;
   }
 
@@ -343,68 +423,24 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
     return false;
   }
 
-  private boolean jj_3R_6() {
+  private boolean jj_3R_7() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_14()) {
     jj_scanpos = xsp;
-    if (jj_3_15()) return true;
+    if (jj_3_15()) {
+    jj_scanpos = xsp;
+    if (jj_3_16()) {
+    jj_scanpos = xsp;
+    if (jj_3_17()) return true;
+    }
+    }
     }
     return false;
   }
 
   private boolean jj_3_14() {
-    if (jj_scan_token(NUMBER)) return true;
-    return false;
-  }
-
-  private boolean jj_3_2() {
-    if (jj_scan_token(EOL)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_7() {
-    if (jj_3R_3()) return true;
-    return false;
-  }
-
-  private boolean jj_3_13() {
-    if (jj_3R_6()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_5() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_12()) {
-    jj_scanpos = xsp;
-    if (jj_3_13()) return true;
-    }
-    return false;
-  }
-
-  private boolean jj_3_12() {
-    if (jj_scan_token(MINUS)) return true;
-    if (jj_3R_6()) return true;
-    return false;
-  }
-
-  private boolean jj_3_1() {
-    if (jj_scan_token(0)) return true;
-    return false;
-  }
-
-  private boolean jj_3_11() {
-    if (jj_scan_token(EXPONENT)) return true;
-    if (jj_3R_5()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_4() {
-    if (jj_3R_5()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_11()) jj_scanpos = xsp;
+    if (jj_scan_token(EIGENVALUE_IDENTIFIER)) return true;
     return false;
   }
 
@@ -427,7 +463,7 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
    private static void jj_la1_init_0() {
       jj_la1_0 = new int[] {};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[15];
+  final private JJCalls[] jj_2_rtns = new JJCalls[17];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -611,7 +647,7 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[16];
+    boolean[] la1tokens = new boolean[21];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -625,7 +661,7 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
         }
       }
     }
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 21; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
@@ -652,7 +688,7 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
 
   private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 17; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -674,6 +710,8 @@ public class FormulaEvaluator implements FormulaEvaluatorConstants {
             case 12: jj_3_13(); break;
             case 13: jj_3_14(); break;
             case 14: jj_3_15(); break;
+            case 15: jj_3_16(); break;
+            case 16: jj_3_17(); break;
           }
         }
         p = p.next;

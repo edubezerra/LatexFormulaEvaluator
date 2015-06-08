@@ -1,6 +1,7 @@
 options {
     STATIC = false;
     LOOKAHEAD = 2;
+    DEBUG_PARSER=false;
 }
 
 PARSER_BEGIN(FormulaEvaluator)
@@ -39,11 +40,35 @@ PARSER_END(FormulaEvaluator)
 
 SKIP : { " " | "\t" | "\r" }
 
-TOKEN : { < NUMBER : (["0"-"9"])+ ("." (["0"-"9"])+)? > }
+TOKEN:
+{
+   < EIGENVALUE_IDENTIFIER:
+   		"q_" <DIGITS>
+   | "\\lambda_" <DIGITS>
+   | "\\mu_" <DIGITS>
+   >
+}
+
+TOKEN: /* Numeric constants */
+	{	<INT_CONST: <DIGITS> >
+	|	<DBL_CONST
+			:	<DIGITS> "." (<DIGIT>)* (<EXPONENT>)?
+		|	"." <DIGITS> (<EXPONENT>)?
+			|	<DIGITS> <EXPONENT>
+		>
+	|	<#EXPONENT: ["e","E"] (["+","-"])? <DIGITS> >
+	}
+
+
+TOKEN: /* Helpers */
+	{	<#DIGITS: (<DIGIT>)+ >
+	|	<#DIGIT: ["0"-"9"] >
+	}
+
 TOKEN : { < EOL : "\n" > }
 TOKEN : { < PLUS : "+" > }
 TOKEN : { < MINUS : "-" > }
-TOKEN : { < EXPONENT : "^" > }
+TOKEN : { < POWER : "^" > }
 
 double parse() : {
     double value;
@@ -80,7 +105,7 @@ double term() : {
     )*
     { return x; }
     |
-    "\\frac{" x=expExpr() "}" "{" y=expExpr() "}"
+    "\\frac{" x=expr() "}" "{" y=expr() "}"
     { return x/y; }
 }
 
@@ -91,7 +116,7 @@ double expExpr() : {
 {
     x=value()
     (
-    	<EXPONENT> y=value()	{ return Math.pow(x,y); }
+    	<POWER> y=value()	{ return Math.pow(x,y); }
     )?
     { return x; }
 }
@@ -110,7 +135,12 @@ double number() : {
     double value;
 }
 {
-    t=<NUMBER>		{ return Double.parseDouble(t.image); }
+    t=<EIGENVALUE_IDENTIFIER>		{ return 1.0; }
+    |
+    t=<DBL_CONST>		{ return Double.parseDouble(t.image); }
+    |
+    t=<INT_CONST>		{ return Double.parseDouble(t.image); }
     |
     "(" value=expr() ")"	{ return value; }
 }
+

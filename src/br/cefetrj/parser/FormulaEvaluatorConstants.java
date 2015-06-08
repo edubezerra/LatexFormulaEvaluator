@@ -11,15 +11,25 @@ public interface FormulaEvaluatorConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int NUMBER = 4;
+  int EIGENVALUE_IDENTIFIER = 4;
   /** RegularExpression Id. */
-  int EOL = 5;
+  int INT_CONST = 5;
   /** RegularExpression Id. */
-  int PLUS = 6;
+  int DBL_CONST = 6;
   /** RegularExpression Id. */
-  int MINUS = 7;
+  int EXPONENT = 7;
   /** RegularExpression Id. */
-  int EXPONENT = 8;
+  int DIGITS = 8;
+  /** RegularExpression Id. */
+  int DIGIT = 9;
+  /** RegularExpression Id. */
+  int EOL = 10;
+  /** RegularExpression Id. */
+  int PLUS = 11;
+  /** RegularExpression Id. */
+  int MINUS = 12;
+  /** RegularExpression Id. */
+  int POWER = 13;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -30,7 +40,12 @@ public interface FormulaEvaluatorConstants {
     "\" \"",
     "\"\\t\"",
     "\"\\r\"",
-    "<NUMBER>",
+    "<EIGENVALUE_IDENTIFIER>",
+    "<INT_CONST>",
+    "<DBL_CONST>",
+    "<EXPONENT>",
+    "<DIGITS>",
+    "<DIGIT>",
     "\"\\n\"",
     "\"+\"",
     "\"-\"",
