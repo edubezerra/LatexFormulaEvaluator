@@ -130,4 +130,13 @@ public class FormulaEvaluatorTest {
 				"\\frac{\\lambda_n + q_1}{\\mu_1}");
 		eval.parse();
 	}
+
+	/**
+	 * Note the invalid identifier "asdsad".
+	 */
+	@Test(expected = br.cefetrj.parser.TokenMgrError.class)
+	public void testInvalidIdentifier() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\lambda_1 + asdsad");
+		eval.parse();
+	}
 }
