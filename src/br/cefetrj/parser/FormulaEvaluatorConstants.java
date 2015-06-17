@@ -11,25 +11,37 @@ public interface FormulaEvaluatorConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int EIGENVALUE_IDENTIFIER = 4;
+  int NUMBER_OF_VERTICES = 4;
   /** RegularExpression Id. */
-  int INT_CONST = 5;
+  int NUMBER_OF_EDGES = 5;
   /** RegularExpression Id. */
-  int DBL_CONST = 6;
+  int EIGENVALUE_IDENTIFIER = 6;
   /** RegularExpression Id. */
-  int EXPONENT = 7;
+  int EULER_CONSTANT = 7;
   /** RegularExpression Id. */
-  int DIGITS = 8;
+  int CHROMATIC_NUMBER = 8;
   /** RegularExpression Id. */
-  int DIGIT = 9;
+  int LARGEST_CLIQUE_SIZE = 9;
   /** RegularExpression Id. */
-  int EOL = 10;
+  int LARGEST_DEGREE_IDENTIFIER = 10;
   /** RegularExpression Id. */
-  int PLUS = 11;
+  int INT_CONST = 11;
   /** RegularExpression Id. */
-  int MINUS = 12;
+  int DBL_CONST = 12;
   /** RegularExpression Id. */
-  int POWER = 13;
+  int EXPONENT = 13;
+  /** RegularExpression Id. */
+  int DIGITS = 14;
+  /** RegularExpression Id. */
+  int DIGIT = 15;
+  /** RegularExpression Id. */
+  int EOL = 16;
+  /** RegularExpression Id. */
+  int PLUS = 17;
+  /** RegularExpression Id. */
+  int MINUS = 18;
+  /** RegularExpression Id. */
+  int POWER = 19;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -40,7 +52,13 @@ public interface FormulaEvaluatorConstants {
     "\" \"",
     "\"\\t\"",
     "\"\\r\"",
+    "\"n\"",
+    "\"m\"",
     "<EIGENVALUE_IDENTIFIER>",
+    "\"\\\\exp\"",
+    "\"\\\\chi\"",
+    "\"\\\\omega\"",
+    "<LARGEST_DEGREE_IDENTIFIER>",
     "<INT_CONST>",
     "<DBL_CONST>",
     "<EXPONENT>",

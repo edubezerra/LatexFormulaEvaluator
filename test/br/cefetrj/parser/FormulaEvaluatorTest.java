@@ -87,6 +87,19 @@ public class FormulaEvaluatorTest {
 	}
 
 	@Test
+	public void testExponentiationWithSum() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("2^{3.1 + 1.5}");
+		double valor = eval.evaluate();
+		assertEquals(valor, 24.251, 0.01);
+	}
+
+	@Test
+	public void testExponentiation2() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("2^{q_1}");
+		eval.parse();
+	}
+
+	@Test
 	public void testNumberInScientificNotation() throws Exception {
 		FormulaEvaluator eval = new FormulaEvaluator("1.87796E16");
 		double valor = eval.evaluate();
@@ -132,11 +145,61 @@ public class FormulaEvaluatorTest {
 	}
 
 	/**
-	 * Note the invalid identifier "asdsad".
+	 * Notice the invalid identifier "asdsad".
 	 */
 	@Test(expected = br.cefetrj.parser.TokenMgrError.class)
 	public void testInvalidIdentifier() throws Exception {
 		FormulaEvaluator eval = new FormulaEvaluator("\\lambda_1 + asdsad");
+		eval.parse();
+	}
+
+	@Test
+	public void testUsingNumberOfVertices() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\lambda_1 + n");
+		eval.parse();
+	}
+
+	@Test
+	public void testUsingNumberOfEdges() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\lambda_1 + m");
+		eval.parse();
+	}
+
+	/**
+	 * Notice the invalid identifier "p".
+	 */
+	@Test(expected = br.cefetrj.parser.TokenMgrError.class)
+	public void testUnknownIdentifier() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\lambda_1 + p");
+		eval.parse();
+	}
+
+	public void testChiAndOmega() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\chi + \\omega");
+		eval.parse();
+	}
+
+	@Test(expected = br.cefetrj.parser.TokenMgrError.class)
+	public void testChiAndOmegaDontHaveSubscripts() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\chi_1 + \\omega_d");
+		eval.parse();
+	}
+
+	@Test
+	public void testEulerConstant() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\exp");
+		eval.parse();
+	}
+
+	@Test
+	public void testEulerConstantWithConstantExponent() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\exp^2");
+		eval.parse();
+	}
+
+	@Test
+	public void testEulerConstantWithEigenvalueAsExponent() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\exp^{q_2}");
 		eval.parse();
 	}
 }
