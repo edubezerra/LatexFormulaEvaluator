@@ -140,7 +140,28 @@ public class FormulaEvaluatorTest {
 	@Test(expected = br.cefetrj.parser.TokenMgrError.class)
 	public void testIdentifierWithWrongSubscript() throws Exception {
 		FormulaEvaluator eval = new FormulaEvaluator(
-				"\\frac{\\lambda_n + q_1}{\\mu_1}");
+				"\\frac{\\lambda_p + q_1}{\\mu_1}");
+		eval.parse();
+	}
+
+	@Test
+	public void testIdentifierWithSubscriptN() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator(
+				"\\frac{\\lambda_1 + q_n}{\\mu_1}");
+		eval.parse();
+	}
+
+	@Test(expected = br.cefetrj.parser.TokenMgrError.class)
+	public void testWrongIdentifierWithSubscriptNMinusOne() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator(
+				"\\frac{\\lambda_1 + x_{p-1}}{\\mu_1}");
+		eval.parse();
+	}
+
+	@Test
+	public void testIdentifierWithSubscriptNMinusOne() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator(
+				"\\frac{\\lambda_n + q_{n-1}}{\\mu_1}");
 		eval.parse();
 	}
 
@@ -161,7 +182,7 @@ public class FormulaEvaluatorTest {
 
 	@Test
 	public void testUsingNumberOfEdges() throws Exception {
-		FormulaEvaluator eval = new FormulaEvaluator("\\lambda_1 + m");
+		FormulaEvaluator eval = new FormulaEvaluator("\\lambda_1 + \\mu_1 + m");
 		eval.parse();
 	}
 
@@ -201,5 +222,51 @@ public class FormulaEvaluatorTest {
 	public void testEulerConstantWithEigenvalueAsExponent() throws Exception {
 		FormulaEvaluator eval = new FormulaEvaluator("\\exp^{q_2}");
 		eval.parse();
+	}
+
+	@Test
+	public void testInvalidUseOfMu() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\mu_1");
+		eval.parse();
+	}
+
+	@Test(expected = br.cefetrj.parser.TokenMgrError.class)
+	public void testWrongUseOfOverline() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\overline{q}_1 - 1");
+		eval.parse();
+	}
+
+	@Test
+	public void testOverline() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\overline{q_1} - 1");
+		eval.parse();
+	}
+
+	@Test
+	public void testOverlineWithChiAndOmega() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\overline{\\chi} + \\overline{\\omega}");
+		eval.parse();
+	}
+
+	@Test
+	public void testFrac0() throws Exception {
+		FormulaEvaluator eval = new FormulaEvaluator("\\frac{2.5}{3.2}");
+		double valor = eval.evaluate();
+		assertEquals(valor, 0.781, 0.1);
+	}
+	
+	@Test
+	public void testFrac() throws Exception {
+		String functionStr = "\\frac{\\mu_1}{\\overline{\\mu_1}}";
+
+		functionStr = functionStr.replace("\\overline{\\mu_1}", "3.2");
+		functionStr = functionStr.replace("\\mu_1", "2.5");
+
+		FormulaEvaluator eval = new FormulaEvaluator(functionStr);
+
+		System.out.println(functionStr);
+		
+		double valor = eval.evaluate();
+		assertEquals(valor, 0.781, 0.1);
 	}
 }

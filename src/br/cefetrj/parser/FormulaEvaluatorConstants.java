@@ -17,31 +17,33 @@ public interface FormulaEvaluatorConstants {
   /** RegularExpression Id. */
   int EIGENVALUE_IDENTIFIER = 6;
   /** RegularExpression Id. */
-  int EULER_CONSTANT = 7;
+  int IDENTIFIER_WITH_OVERLINE = 7;
   /** RegularExpression Id. */
-  int CHROMATIC_NUMBER = 8;
+  int EULER_CONSTANT = 8;
   /** RegularExpression Id. */
-  int LARGEST_CLIQUE_SIZE = 9;
+  int CHROMATIC_NUMBER = 9;
   /** RegularExpression Id. */
-  int LARGEST_DEGREE_IDENTIFIER = 10;
+  int LARGEST_CLIQUE_SIZE = 10;
   /** RegularExpression Id. */
-  int INT_CONST = 11;
+  int LARGEST_DEGREE_IDENTIFIER = 11;
   /** RegularExpression Id. */
-  int DBL_CONST = 12;
+  int INT_CONST = 12;
   /** RegularExpression Id. */
-  int EXPONENT = 13;
+  int DBL_CONST = 13;
   /** RegularExpression Id. */
-  int DIGITS = 14;
+  int EXPONENT = 14;
   /** RegularExpression Id. */
-  int DIGIT = 15;
+  int DIGITS = 15;
   /** RegularExpression Id. */
-  int EOL = 16;
+  int DIGIT = 16;
   /** RegularExpression Id. */
-  int PLUS = 17;
+  int EOL = 17;
   /** RegularExpression Id. */
-  int MINUS = 18;
+  int PLUS = 18;
   /** RegularExpression Id. */
-  int POWER = 19;
+  int MINUS = 19;
+  /** RegularExpression Id. */
+  int POWER = 20;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -55,6 +57,7 @@ public interface FormulaEvaluatorConstants {
     "\"n\"",
     "\"m\"",
     "<EIGENVALUE_IDENTIFIER>",
+    "<IDENTIFIER_WITH_OVERLINE>",
     "\"\\\\exp\"",
     "\"\\\\chi\"",
     "\"\\\\omega\"",
