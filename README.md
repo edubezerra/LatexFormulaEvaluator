@@ -1,3 +1,3 @@
 # LatexFormulaEvaluator
 
-This is a parser and evaluator from simple formulas writen in Latex.
+A parser and evaluator for simple mathematical formulas writen in Latex.
