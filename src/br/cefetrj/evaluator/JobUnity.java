@@ -1,5 +1,8 @@
 package br.cefetrj.evaluator;
 
+import java.io.File;
+import java.util.List;
+
 public class JobUnity {
 	private String lapFile;
 	private String adjFile;
@@ -13,9 +16,14 @@ public class JobUnity {
 	private String optimizationFunction;
 	private String g6fileid;
 	private String maxResults;
-	
-	private boolean usingGreatestDegrees;
-	private String greatestDegreesFile;
+
+	private String invariantsFile;
+	private String chi;
+	private String chiBar;
+	private String omega;
+	private String omegaBar;
+	private String numVertices;
+	private String numEdges;
 
 	public void setMaxResults(String maxResults) {
 		this.maxResults = maxResults;
@@ -117,20 +125,84 @@ public class JobUnity {
 		this.adjBarFile = adjBarFile;
 	}
 
-	public void setSgnlapBarFile(String sgnlapBarFile) {
+	public void setSgnLapBarFile(String sgnlapBarFile) {
 		this.sgnLapBarFile = sgnlapBarFile;
 	}
 
 	public boolean isUsingGreatestDegrees() {
-		return usingGreatestDegrees;
+		return this.omega != null;
 	}
 
-	public String getGreatestDegreesFile() {
-		return this.greatestDegreesFile;
-	}
-	
-	public void setGreatestDegreesFile(String greatestDegreesFile) {
-		this.greatestDegreesFile = greatestDegreesFile;
+	public void setInvariantsFile(String workFolder, String inputFile)
+			throws Exception {
+		this.invariantsFile = inputFile;
+		List<String> inputData = CsvReader.readFile(workFolder + File.separator
+				+ "geni.inv");
+		if (inputData.size() > 1) {
+			String header = inputData.get(0); // Get the CSV header
+
+			for (int x = 1; x < inputData.size(); x++) {
+				String line = inputData.get(x);
+				String[] lineData = line.split(",");
+
+				int index = CsvReader.getIndex("chi", header);
+				if (index >= 0) {
+					this.chi = lineData[index];
+				}
+
+				index = CsvReader.getIndex("chiBar", header);
+				if (index >= 0) {
+					this.chiBar = lineData[index];
+				}
+
+				index = CsvReader.getIndex("omega", header);
+				if (index >= 0) {
+					this.omega = lineData[index];
+				}
+
+				index = CsvReader.getIndex("omegaBar", header);
+				if (index >= 0) {
+					this.omegaBar = lineData[index];
+				}
+
+				index = CsvReader.getIndex("numVertices", header);
+				if (index >= 0) {
+					this.numVertices = lineData[index];
+				}
+
+				index = CsvReader.getIndex("numEdges", header);
+				if (index >= 0) {
+					this.numEdges = lineData[index];
+				}
+			}
+		}
 	}
 
+	public String getInvariantsFile() {
+		return invariantsFile;
+	}
+
+	public String getNumVertices() {
+		return numVertices;
+	}
+
+	public String getNumEdges() {
+		return numEdges;
+	}
+
+	public String getChi() {
+		return chi;
+	}
+
+	public String getChiBar() {
+		return chiBar;
+	}
+
+	public String getOmega() {
+		return omega;
+	}
+
+	public String getOmegaBar() {
+		return omegaBar;
+	}
 }
