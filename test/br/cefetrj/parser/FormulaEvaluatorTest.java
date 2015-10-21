@@ -176,13 +176,13 @@ public class FormulaEvaluatorTest {
 
 	@Test
 	public void testUsingNumberOfVertices() throws Exception {
-		FormulaEvaluator eval = new FormulaEvaluator("\\lambda_1 + n");
+		FormulaEvaluator eval = new FormulaEvaluator("\\lambda_1 + SIZE");
 		eval.parse();
 	}
 
 	@Test
 	public void testUsingNumberOfEdges() throws Exception {
-		FormulaEvaluator eval = new FormulaEvaluator("\\lambda_1 + \\mu_1 + m");
+		FormulaEvaluator eval = new FormulaEvaluator("\\lambda_1 + \\mu_1 + ORDER");
 		eval.parse();
 	}
 
